@@ -22,16 +22,13 @@ class TaskManager:
 
     # Add a new task
     def add_task(self, title):
-        task_id = max(
-            [t["id"] for t in self.tasks], default=0
-        ) + 1
-
-        task = {
-            "id": task_id,
-            "title": title,
-            "done": False
-        }
-
+        title = title.strip()
+        if not title:
+            raise ValueError("Task title cannot be empty.")
+        if len(title) > 100:
+            raise ValueError("Task title is too long (max 100 characters).")
+        task_id = max([t["id"] for t in self.tasks], default=0) + 1
+        task = {"id": task_id, "title": title, "done": False}
         self.tasks.append(task)
         self.save()
         return task
