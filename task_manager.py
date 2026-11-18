@@ -50,6 +50,14 @@ class TaskManager:
 
         return False
 
+    def delete_task(self, task_id):
+        for t in self.tasks:
+            if t["id"] == task_id:
+                self.tasks.remove(t)
+                self.save()
+                return True
+        return False
+
     # Display all tasks
     def show_tasks(self):
         tasks = self.list_tasks()
@@ -72,6 +80,7 @@ def main():
         print("1. Add task")
         print("2. Show tasks")
         print("3. Complete task")
+        print("4. Delete task")
         print("0. Exit")
 
         choice = input("Choose an option: ").strip()
@@ -93,6 +102,10 @@ def main():
             elif choice == "3":
                 task_id = int(input("Task id: "))
                 ok = manager.complete_task(task_id)
+
+            elif choice == "4":
+                ok = manager.delete_task(int(input("Task id: ")))
+                print("Deleted." if ok else "Task not found.")
 
                 if ok:
                     print("Marked complete.")
