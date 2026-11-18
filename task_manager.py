@@ -50,6 +50,14 @@ class TaskManager:
 
         return False
 
+    def delete_task(self, task_id):
+        for t in self.tasks:
+            if t["id"] == task_id:
+                self.tasks.remove(t)
+                self.save()
+                return True
+        return False
+
     # Display all tasks
     def show_tasks(self):
         tasks = self.list_tasks()
